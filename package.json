@@ -1,0 +1,29 @@
+{
+  "name": "q-cascader",
+  "version": "0.0.1",
+  "description": "quasar-cascader",
+  "main": "src/QCascader.vue",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "quasar",
+    "cascader"
+  ],
+  "author": {
+    "name": "seffeng",
+    "email": "save.zxf@gmail.com"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.4",
+    "quasar": "^2.8.5"
+  },
+  "devDependencies": {
+  },
+  "license": "MIT",
+  "deprecated": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/seffeng/quasar-cascader.git"
+  }
+}
