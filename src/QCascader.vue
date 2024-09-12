@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'QCascader',
@@ -137,8 +137,13 @@ export default defineComponent({
   setup (props, { emit }) {
     const selfLabel = ref(props.label ? props.label : '请选择')
 
+    onMounted(() => {
+      const value = props.modelValue
+      setSelfLabel(value[0] || '', value[1] || '', value[2] || '', value[3] || '')
+    })
+
     watch(() => props.modelValue, (value) => {
-      setSelfLabel(value[0] || '', value[1] || '', value[2] || undefined, value[3] || '', value[4] || '')
+      setSelfLabel(value[0] || '', value[1] || '', value[2] || '', value[3] || '')
     })
 
     const updateValue = (a, b, c, d) => {
