@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'QCascader',
@@ -137,18 +137,12 @@ export default defineComponent({
   setup (props, { emit }) {
     const selfLabel = ref(props.label ? props.label : '请选择')
 
-    onMounted(() => {
-      if (props.modelValue[0] !== undefined && props.modelValue[1] !== undefined) {
-        updateValue(props.modelValue[0] || '', props.modelValue[1] || '', props.modelValue[2] || undefined, props.modelValue[3] || '', props.modelValue[4] || '')
-      }
-    })
-
-    onUnmounted(() => {
+    watch(() => props.modelValue, (value) => {
+      setSelfLabel(value[0] || '', value[1] || '', value[2] || undefined, value[3] || '', value[4] || '')
     })
 
     const updateValue = (a, b, c, d) => {
-      selfLabel.value = ((d !== undefined && d !== '') ? (getLabel(d) + '/') : '') + ((c !== undefined && c !== '') ? (getLabel(c) + '/') : '') +
-                        ((b !== undefined && b !== '') ? (getLabel(b) + '/') : '') + getLabel(a)
+      setSelfLabel(a, b, c, d)
       const items = [a]
       if (b !== undefined && b !== '') {
         items.push(b)
@@ -167,6 +161,11 @@ export default defineComponent({
     const getLabel = (option) => {
       // eslint-disable-next-line no-prototype-builtins
       return (typeof option === 'object' && option.hasOwnProperty(props.optionLabel)) ? option[props.optionLabel] : ''
+    }
+
+    const setSelfLabel = (a, b, c, d) => {
+      selfLabel.value = ((d !== undefined && d !== '') ? (getLabel(d) + '/') : '') + ((c !== undefined && c !== '') ? (getLabel(c) + '/') : '') +
+                        ((b !== undefined && b !== '') ? (getLabel(b) + '/') : '') + getLabel(a)
     }
 
     return {
