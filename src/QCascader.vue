@@ -139,11 +139,15 @@ export default defineComponent({
 
     onMounted(() => {
       const value = props.modelValue
-      setSelfLabel(value[0] || '', value[1] || '', value[2] || '', value[3] || '')
+      if (!isEmpty(value)) {
+        setSelfLabel(value[0] || '', value[1] || '', value[2] || '', value[3] || '')
+      }
     })
 
     watch(() => props.modelValue, (value) => {
-      setSelfLabel(value[0] || '', value[1] || '', value[2] || '', value[3] || '')
+      if (!isEmpty(value)) {
+        setSelfLabel(value[0] || '', value[1] || '', value[2] || '', value[3] || '')
+      }
     })
 
     const updateValue = (a, b, c, d) => {
@@ -163,14 +167,25 @@ export default defineComponent({
       emit('update:modelValue', items, props.index)
     }
 
+    const isNull = (val) => {
+      return val === undefined || val === null
+    }
+
+    const isEmpty = (obj) => {
+      return isNull(obj) || (typeof (obj) === 'string' && obj.trim() === '') || (typeof (obj) === 'object' && Object.keys(obj).length < 1)
+    }
+
     const getLabel = (option) => {
       // eslint-disable-next-line no-prototype-builtins
       return (typeof option === 'object' && option.hasOwnProperty(props.optionLabel)) ? option[props.optionLabel] : ''
     }
 
     const setSelfLabel = (a, b, c, d) => {
-      selfLabel.value = ((d !== undefined && d !== '') ? (getLabel(d) + '/') : '') + ((c !== undefined && c !== '') ? (getLabel(c) + '/') : '') +
-                        ((b !== undefined && b !== '') ? (getLabel(b) + '/') : '') + getLabel(a)
+      const label = (!isEmpty(d) ? (getLabel(d) + '/') : '') + (!isEmpty(c) ? (getLabel(c) + '/') : '') +
+                        ((!isEmpty(b)) ? (getLabel(b) + '/') : '') + getLabel(a)
+      if (label !== '') {
+        selfLabel.value = label
+      }
     }
 
     return {

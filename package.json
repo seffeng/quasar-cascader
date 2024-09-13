@@ -1,6 +1,6 @@
 {
   "name": "q-cascader",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "quasar-cascader",
   "main": "src/QCascader.vue",
   "scripts": {
