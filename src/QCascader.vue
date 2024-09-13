@@ -1,5 +1,10 @@
 <template>
-  <q-btn-dropdown flat outline :no-caps="noCaps" :label="selfLabel">
+  <q-btn-dropdown
+    :flat="flat"
+    :outline="outline"
+    :no-caps="noCaps"
+    :label="selfLabel"
+  >
     <q-list>
       <div v-for="(option, index) in options" :key="'p-' + index">
         <q-item
@@ -11,11 +16,11 @@
             <q-item-label>{{ getLabel(option) }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-icon size="xs" :name="expandIcon" />
+            <q-icon :size="expandIconSize" :name="expandIcon" />
           </q-item-section>
           <q-menu
-            anchor="top end"
-            self="top middle"
+            :anchor="menuAnchor"
+            :self="menuSelf"
           >
             <q-list>
               <div v-for="(child, cIndex) in option.children" :key="'p-c-' + cIndex">
@@ -27,11 +32,11 @@
                     <q-item-label>{{ getLabel(child) }}</q-item-label>
                   </q-item-section>
                   <q-item-section avatar>
-                    <q-icon size="xs" :name="expandIcon" />
+                    <q-icon :size="expandIconSize" :name="expandIcon" />
                   </q-item-section>
                   <q-menu
-                    anchor="top end"
-                    self="top middle"
+                    :anchor="menuAnchor"
+                    :self="menuSelf"
                   >
                     <q-list style="min-width: 100px">
                       <div v-for="(aChild, aIndex) in child.children" :key="'p-c-a-' + aIndex">
@@ -43,11 +48,11 @@
                             <q-item-label>{{ getLabel(aChild) }}</q-item-label>
                           </q-item-section>
                           <q-item-section avatar>
-                            <q-icon size="xs" :name="expandIcon" />
+                            <q-icon :size="expandIconSize" :name="expandIcon" />
                           </q-item-section>
                           <q-menu
-                            anchor="top end"
-                            self="top middle"
+                            :anchor="menuAnchor"
+                            :self="menuSelf"
                           >
                             <q-list style="min-width: 100px">
                               <div v-for="(bChild, bIndex) in aChild.children" :key="'p-c-a-b-' + bIndex">
@@ -97,6 +102,22 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    flat: {
+      type: Boolean,
+      default: true
+    },
+    outline: {
+      type: Boolean,
+      default: true
+    },
+    menuAnchor: {
+      type: String,
+      default: 'top end'
+    },
+    menuSelf: {
+      type: String,
+      default: 'top middle'
+    },
     options: {
       type: Array,
       default: function () {
@@ -126,6 +147,10 @@ export default defineComponent({
     expandIcon: {
       type: String,
       default: 'keyboard_arrow_right'
+    },
+    expandIconSize: {
+      type: String,
+      default: 'xs'
     },
     modelValue: {
       type: Array,
